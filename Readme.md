@@ -18,7 +18,7 @@ For example like this:
 ![CommPass](https://user-images.githubusercontent.com/39552762/92737511-80768780-f37b-11ea-9586-36d83eb250b2.png)
 
 # Exe version
-Here is the complied exe:
+Here is the compiled exe:
 
 https://drive.google.com/open?id=1hAUgXvj4DJPT4usZZSDy9YwL7gI8NET8
 
