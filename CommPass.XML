@@ -1,0 +1,109 @@
+<CommPass>
+
+  <TAB NAME=" ORACLE ">
+
+      <CP With="^v">select
+    substr(CHILDREN.OWNER,1,instr(CHILDREN.OWNER,'X')-1)||'_'||substr(CHILDREN.CONSTRAINT_NAME,4)    as REFERENCE_NAME,
+    CHILDREN.POSITION           as POSITION,
+    CHILDREN.OWNER              as CHILD_SCHEMA_NAME,
+    CHILDREN.TABLE_NAME         as CHILD_TABLE_NAME,
+    CHILDREN.COLUMN_NAME        as CHILD_COLUMN_NAME,
+    PARENTS.OWNER               as PARENT_SCHEMA_NAME,
+    PARENTS.TABLE_NAME          as PARENT_TABLE_NAME,
+    PARENTS.COLUMN_NAME         as PARENT_COLUMN_NAME
+from
+    (select
+         UC.OWNER,
+         UC.TABLE_NAME,
+         DBC.COLUMN_NAME,
+         POSITION,
+         UC.CONSTRAINT_NAME,
+         R_CONSTRAINT_NAME
+      from
+         ALL_CONSTRAINTS  UC,
+         ALL_CONS_COLUMNS DBC
+     where
+         UC.CONSTRAINT_TYPE  = 'R'                and
+         DBC.CONSTRAINT_NAME = UC.CONSTRAINT_NAME and
+         DBC.OWNER           = UC.OWNER           and
+--         UC.TABLE_NAME       = UPPER('dc_deal_fees')    and 
+         UC.OWNER            = SYS_CONTEXT('USERENV', 'CURRENT_SCHEMA')  ) CHILDREN,
+    (select
+         UC.OWNER,
+         UC.TABLE_NAME,
+         DBC.COLUMN_NAME,
+         POSITION,
+         UC.CONSTRAINT_NAME
+      from
+         ALL_CONSTRAINTS  UC,
+         ALL_CONS_COLUMNS DBC
+     where
+         UC.CONSTRAINT_TYPE  = 'P'                 and
+         DBC.CONSTRAINT_NAME = UC.CONSTRAINT_NAME  and
+         DBC.OWNER           = UC.OWNER            and
+--         UC.TABLE_NAME       = UPPER('md_currencies')    and 
+         UC.OWNER            = SYS_CONTEXT('USERENV', 'CURRENT_SCHEMA')  ) PARENTS
+    where children.r_constraint_name=parents.constraint_name
+      and children.position=parents.position
+</CP>
+      <CP With="^v">select owner, object_name, object_type, last_ddl_time from sys.ALL_OBJECTS where status!='VALID' and object_type!='SYNONYM' and owner not like '%SYS%' order by owner, object_name</CP>
+      <CP With="^v">select * from ALL_OBJECTS where OBJECT_TYPE != 'SYNONYM' and OBJECT_NAME like upper('%AAA%')</CP>
+      <CP With="^v">select * from ALL_TAB_COLUMNS where OWNER = SYS_CONTEXT('USERENV', 'CURRENT_SCHEMA')  and column_name like upper('%AAA%') </CP>
+      <CP With="^v">Select * from </CP>
+      <KBDEMU>Select * from  where {left 6}</KBDEMU>
+      <CP With="^v"> To_Char(sysdate,'yyyy.mm.dd hh24:mi:ss') </CP>
+      <KBDEMU>exec dbms_output.put_line{(}  {)};{left 3}</KBDEMU>
+      <CP With="^v{enter}">declare {enter} begin {enter} end;</CP>
+
+
+  </TAB>
+
+  <TAB NAME=" SQLPlus ">
+
+    <Comment>                    Schemas</Comment>
+      <KBDEMU>sqlplus TEST1/TEST1@</KBDEMU>
+      <KBDEMU>sqlplus TEST2/TEST2@</KBDEMU>
+
+    <Comment>                    Servers</Comment>
+      <KBDEMU>database.test1.hu:1521/orcl{enter}</KBDEMU>
+      <KBDEMU>database.test2.hu:1521/orcl{enter}</KBDEMU>
+
+    <Comment>                    Commands</Comment>
+      <KBDEMU>set serveroutput on size = 100000 </KBDEMU>
+      <KBDEMU>alter session set NLS_LANGUAGE="AMERICAN";</KBDEMU>
+      <KBDEMU>select * from </KBDEMU>
+      <KBDEMU>select count(*) from </KBDEMU>
+      <KBDEMU>desc </KBDEMU>
+
+    <Comment></Comment>
+      <KBDEMU>quit{enter}</KBDEMU>
+      <KBDEMU>exit{enter}</KBDEMU>
+
+  </TAB>
+
+  <TAB NAME=" VI ">
+
+    <Comment>  :x  - exit with save</Comment>
+    <Comment>  :q! - exit without save</Comment>
+    <Comment>  ESC - switch to command mode</Comment>
+    <Comment>  :set showmode - displays the current mode</Comment>
+    <Comment>  i   - insert before</Comment>
+    <Comment>  a   - insert after</Comment>
+    <Comment>  /   - search forward</Comment>
+    <Comment>  ?   - search backward</Comment>
+    <Comment>  n   - search next</Comment>
+    <Comment>  N   - search next to opposite way</Comment>
+    <Comment>  $   - jump to EOL</Comment>
+    <Comment>  ^   - jump to BOL</Comment>
+    <Comment>  G   - jump to EOF</Comment>
+    <Comment>  gg  - jump to BOF</Comment>
+    <Comment>  x   - delete</Comment>
+    <Comment>  dd  - delete the line</Comment>
+    <Comment>  yy  - copy the line</Comment>
+    <Comment>  p   - paste the copied line</Comment>
+    <Comment>  u   - UnDo</Comment>
+
+  </TAB>
+  
+</CommPass>
+
